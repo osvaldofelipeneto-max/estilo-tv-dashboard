@@ -345,7 +345,7 @@ function renderDashboard(d) {
 
   // Ticker tela 2 (aniversariantes)
   if (d.ticker.aniversariantes.length) {
-    const partes = d.ticker.aniversariantes.map(n => `🎂 ${n} · ${d.mes}`).join(' &nbsp;·&nbsp; Parabéns! A Estilo celebra com você! 🎉 &nbsp;·&nbsp; ');
+    const partes = d.ticker.aniversariantes.map(n => `🎂 ${n} · ${d.mes} &nbsp;·&nbsp; Parabéns! A Estilo celebra com você! 🎉`).join(' &nbsp;·&nbsp; ');
     document.querySelector('#s2 .ticker-text').innerHTML = partes + ' &nbsp;·&nbsp; ';
   }
 }
