@@ -294,7 +294,11 @@ function trocar() {
   if (cur === 1) { s1.classList.remove('active'); s2.classList.add('active'); d1.classList.remove('on'); d2.classList.add('on'); cur = 2; }
   else { s2.classList.remove('active'); s1.classList.add('active'); d2.classList.remove('on'); d1.classList.add('on'); cur = 1; }
 }
-setInterval(trocar, 15000);
+function agendarTroca() {
+  const tempo = cur === 1 ? 30000 : 15000;
+  setTimeout(() => { trocar(); agendarTroca(); }, tempo);
+}
+agendarTroca();
 
 // ─────────────────────────────────────────────
 // RENDER — injeta dados da API no HTML
