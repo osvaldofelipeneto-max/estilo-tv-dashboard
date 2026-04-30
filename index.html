@@ -1,4 +1,3 @@
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Bebas+Neue&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -24,7 +23,7 @@
 .ticker{height:26px;background:var(--red);display:flex;align-items:center;overflow:hidden;flex-shrink:0;}
 .ticker-pill{background:#6e0000;color:var(--gold);font-size:8px;font-weight:800;letter-spacing:2px;padding:0 14px;height:100%;display:flex;align-items:center;white-space:nowrap;flex-shrink:0;gap:6px;}
 .ticker-scroll{flex:1;overflow:hidden;height:100%;display:flex;align-items:center;}
-.ticker-text{white-space:nowrap;animation:scrollt 36s linear infinite;font-size:9px;font-weight:700;color:#fff;letter-spacing:0.6px;}
+.ticker-text{white-space:nowrap;animation:scrollt 18s linear infinite;font-size:9px;font-weight:700;color:#fff;letter-spacing:0.6px;}
 @keyframes scrollt{0%{transform:translateX(100%)}100%{transform:translateX(-130%)}}
 
 /* S1 LAYOUT */
@@ -85,10 +84,11 @@
 .aniv-hdr{display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .aniv-ttl{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--red);letter-spacing:4px;}
 .aniv-sub{font-family:'Bebas Neue',sans-serif;font-size:32px;color:#fff;letter-spacing:2px;}
-.cards2x2{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0;align-content:center;}
+.cards2x2{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0;align-content:start;}
 .cards2x2.single{grid-template-columns:1fr;justify-items:center;}
 .cards2x2.single .acard{width:70%;}
 .cards2x2.single .acard .acard-photo{height:280px;flex:none;}
+.cards2x2.triple{grid-template-columns:1fr 1fr 1fr;}
 
 /* ANIV CARD */
 .acard{background:#fff;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;border:1px solid rgba(227,6,19,0.25);}
@@ -292,7 +292,11 @@ function trocar() {
   if (cur === 1) { s1.classList.remove('active'); s2.classList.add('active'); d1.classList.remove('on'); d2.classList.add('on'); cur = 2; }
   else { s2.classList.remove('active'); s1.classList.add('active'); d2.classList.remove('on'); d1.classList.add('on'); cur = 1; }
 }
-setInterval(trocar, 15000);
+function agendarTroca() {
+  const tempo = cur === 1 ? 30000 : 15000;
+  setTimeout(() => { trocar(); agendarTroca(); }, tempo);
+}
+agendarTroca();
 
 // ─────────────────────────────────────────────
 // RENDER — injeta dados da API no HTML
@@ -378,17 +382,26 @@ function renderAniversariantes(lista) {
   anivCards.innerHTML = '';
   const total = lista.length;
   if (total === 0) return;
-  if (total === 1) { anivCards.style.gridTemplateColumns = '1fr'; anivCards.classList.add('single'); }
-  else anivCards.style.gridTemplateColumns = '1fr 1fr';
 
-  lista.forEach((a, idx) => {
+  // Reset classes
+  anivCards.classList.remove('single', 'triple');
+  anivCards.style.gridTemplateColumns = '';
+
+  if (total === 1) {
+    anivCards.classList.add('single');
+  } else if (total === 3) {
+    anivCards.classList.add('triple');
+  } else {
+    anivCards.style.gridTemplateColumns = '1fr 1fr';
+  }
+
+  lista.forEach((a) => {
     const wrap = document.createElement('div');
     wrap.className = 'acard';
     wrap.innerHTML = `
       <div class="acard-photo">${a.foto ? `<img src="${a.foto}" onerror="this.parentNode.innerHTML='<div class=\\'acard-avatar\\'>👤</div>'"/>` : '<div class="acard-avatar">👤</div>'}</div>
       <div class="acard-name">${a.nome}</div>
     `;
-    if (total === 3 && idx === 2) wrap.style.gridColumn = '1 / -1';
     anivCards.appendChild(wrap);
   });
 }
