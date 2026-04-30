@@ -24,7 +24,9 @@
 .ticker-pill{background:#6e0000;color:var(--gold);font-size:8px;font-weight:800;letter-spacing:2px;padding:0 14px;height:100%;display:flex;align-items:center;white-space:nowrap;flex-shrink:0;gap:6px;}
 .ticker-scroll{flex:1;overflow:hidden;height:100%;display:flex;align-items:center;}
 .ticker-text{white-space:nowrap;animation:scrollt 18s linear infinite;font-size:9px;font-weight:700;color:#fff;letter-spacing:0.6px;}
+.ticker-text.slow{animation:scrollt2 28s linear infinite;}
 @keyframes scrollt{0%{transform:translateX(100%)}100%{transform:translateX(-130%)}}
+@keyframes scrollt2{0%{transform:translateX(100%)}100%{transform:translateX(-130%)}}
 
 /* S1 LAYOUT */
 .s1-body{flex:1;display:grid;grid-template-columns:1fr 360px;gap:11px;padding:11px 13px 8px;min-height:0;}
@@ -246,7 +248,7 @@
         ANIVERSARIANTES
       </div>
       <div class="ticker-scroll">
-        <div class="ticker-text">
+        <div class="ticker-text slow">
           🎂 Pedro Henrique Araújo · Abril &nbsp;·&nbsp; Parabéns! A Estilo celebra com você! 🎉 &nbsp;·&nbsp; Feliz aniversário de toda a equipe Estilo Imobiliária! 🏠 &nbsp;·&nbsp; 🎂 Pedro Henrique Araújo · Abril
         </div>
       </div>
@@ -292,11 +294,7 @@ function trocar() {
   if (cur === 1) { s1.classList.remove('active'); s2.classList.add('active'); d1.classList.remove('on'); d2.classList.add('on'); cur = 2; }
   else { s2.classList.remove('active'); s1.classList.add('active'); d2.classList.remove('on'); d1.classList.add('on'); cur = 1; }
 }
-function agendarTroca() {
-  const tempo = cur === 1 ? 30000 : 15000;
-  setTimeout(() => { trocar(); agendarTroca(); }, tempo);
-}
-agendarTroca();
+setInterval(trocar, 15000);
 
 // ─────────────────────────────────────────────
 // RENDER — injeta dados da API no HTML
