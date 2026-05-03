@@ -410,6 +410,7 @@ function renderAniversariantes(lista) {
     wrap.innerHTML = `
       <div class="acard-photo">${a.foto ? `<img src="${a.foto}" onerror="this.parentNode.innerHTML='<div class=\\'acard-avatar\\'>👤</div>'"/>` : '<div class="acard-avatar">👤</div>'}</div>
       <div class="acard-name">${a.nome}</div>
+      ${a.data ? `<div class="acard-date">${a.data}</div>` : ''}
     `;
     anivCards.appendChild(wrap);
   });
