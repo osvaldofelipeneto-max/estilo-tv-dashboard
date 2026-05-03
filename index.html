@@ -91,6 +91,9 @@
 .cards2x2.single .acard{width:70%;}
 .cards2x2.single .acard .acard-photo{height:280px;flex:none;}
 .cards2x2.triple{grid-template-columns:1fr 1fr 1fr;}
+.cards2x2.duo{grid-template-columns:1fr 1fr;align-content:stretch;}
+.cards2x2.duo .acard{height:100%;}
+.cards2x2.duo .acard .acard-photo{flex:1;min-height:120px;}
 
 /* ANIV CARD */
 .acard{background:#fff;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;border:1px solid rgba(227,6,19,0.25);}
@@ -386,16 +389,17 @@ function renderAniversariantes(lista) {
   if (total === 0) return;
 
   // Reset classes
-  anivCards.classList.remove('single', 'triple');
+  anivCards.classList.remove('single', 'triple', 'duo');
   anivCards.style.gridTemplateColumns = '';
 
   if (total === 1) {
     anivCards.classList.add('single');
+  } else if (total === 2) {
+    anivCards.classList.add('duo');
   } else if (total === 3) {
     anivCards.classList.add('triple');
-  } else {
-    anivCards.style.gridTemplateColumns = '1fr 1fr';
   }
+  // 4+ usa o default 1fr 1fr (grid-template-columns já está no .cards2x2)
 
   lista.forEach((a) => {
     const wrap = document.createElement('div');
