@@ -86,14 +86,16 @@
 .aniv-hdr{display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .aniv-ttl{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--red);letter-spacing:4px;}
 .aniv-sub{font-family:'Bebas Neue',sans-serif;font-size:32px;color:#fff;letter-spacing:2px;}
-.cards2x2{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0;align-content:start;}
+.cards2x2{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0;align-content:stretch;}
 .cards2x2.single{grid-template-columns:1fr;justify-items:center;}
 .cards2x2.single .acard{width:70%;}
 .cards2x2.single .acard .acard-photo{height:280px;flex:none;}
 .cards2x2.triple{grid-template-columns:1fr 1fr 1fr;}
+.cards2x2.triple .acard{display:flex;flex-direction:column;}
+.cards2x2.triple .acard .acard-photo{flex:1;min-height:0;}
 .cards2x2.duo{grid-template-columns:1fr 1fr;align-content:stretch;}
-.cards2x2.duo .acard{height:100%;}
-.cards2x2.duo .acard .acard-photo{flex:1;min-height:120px;}
+.cards2x2.duo .acard{height:100%;display:flex;flex-direction:column;}
+.cards2x2.duo .acard .acard-photo{flex:1;min-height:0;}
 
 /* ANIV CARD */
 .acard{background:#fff;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;border:1px solid rgba(227,6,19,0.25);}
