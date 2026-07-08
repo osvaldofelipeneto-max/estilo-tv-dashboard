@@ -295,18 +295,41 @@ for (let i = 0; i < 20; i++) {
 // ─────────────────────────────────────────────
 // ALTERNÂNCIA DE TELAS
 // ─────────────────────────────────────────────
+const TELA2_MS = 25000; // tempo que a tela 2 fica visível — usado nos dois lugares abaixo
+
 let cur = 1;
 function trocar() {
   const s1 = document.getElementById('s1'), s2 = document.getElementById('s2');
   const d1 = document.getElementById('d1'), d2 = document.getElementById('d2');
-  if (cur === 1) { s1.classList.remove('active'); s2.classList.add('active'); d1.classList.remove('on'); d2.classList.add('on'); cur = 2; }
+  if (cur === 1) {
+    s1.classList.remove('active'); s2.classList.add('active'); d1.classList.remove('on'); d2.classList.add('on'); cur = 2;
+    iniciarTickerAniversariantes();
+  }
   else { s2.classList.remove('active'); s1.classList.add('active'); d2.classList.remove('on'); d1.classList.add('on'); cur = 1; }
 }
 function agendarTroca() {
-  const tempo = cur === 1 ? 30000 : 25000;
+  const tempo = cur === 1 ? 30000 : TELA2_MS;
   setTimeout(() => { trocar(); agendarTroca(); }, tempo);
 }
 agendarTroca();
+
+function iniciarTickerAniversariantes() {
+  const tk = document.querySelector('#s2 .ticker-text');
+  const wrap = document.querySelector('#s2 .ticker-scroll');
+  if (!tk || !wrap) return;
+  tk.getAnimations().forEach(a => a.cancel());
+  const larguraTexto = tk.scrollWidth;
+  const larguraTela = wrap.clientWidth;
+  const duracao = TELA2_MS - 600; // 600ms de folga antes da troca de tela
+  tk.style.transform = `translateX(${larguraTela}px)`;
+  tk.animate(
+    [
+      { transform: `translateX(${larguraTela}px)` },
+      { transform: `translateX(-${larguraTexto}px)` }
+    ],
+    { duration: duracao, iterations: 1, easing: 'linear', fill: 'forwards' }
+  );
+}
 
 // ─────────────────────────────────────────────
 // RENDER — injeta dados da API no HTML
