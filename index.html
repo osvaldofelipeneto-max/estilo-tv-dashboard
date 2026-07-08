@@ -304,7 +304,7 @@ function trocar() {
   else { s2.classList.remove('active'); s1.classList.add('active'); d2.classList.remove('on'); d1.classList.add('on'); cur = 1; }
 }
 function agendarTroca() {
-  const tempo = cur === 1 ? 30000 : 15000;
+  const tempo = cur === 1 ? 30000 : 25000;
   setTimeout(() => { trocar(); agendarTroca(); }, tempo);
 }
 agendarTroca();
